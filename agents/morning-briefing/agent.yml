@@ -1,0 +1,10 @@
+name: Morning Briefing
+description: Daily summary of tasks, calendar, news, and weather
+enabled: true
+schedule:
+  cron: "0 7 * * 1-5"
+  timezone: America/Chicago
+notify:
+  channels: [telegram] # references global notify config
+runtime: omp # optional: overrides global default
+silent_if: NOTHING_TO_REPORT # optional: suppress delivery on this sentinel

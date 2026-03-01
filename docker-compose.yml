@@ -1,0 +1,97 @@
+# docker-compose.yml — Merriman infrastructure services
+#
+# What runs here vs. on the host
+# ───────────────────────────────
+# Docker:  OpenMemory (long-term agent memory)
+#          Optional: OpenMemory dashboard UI (--profile ui)
+# Host:    omp, the agent runner, scheduling (launchd/systemd/cron)
+#
+# The runner must stay on the host so it can access omp, your .mcp.json,
+# and process-level secrets. Docker handles the infrastructure that the
+# runner talks to over HTTP.
+#
+# First-time setup
+# ─────────────────
+# OpenMemory builds from source. Before running docker compose for the first
+# time, clone the project into services/openmemory:
+#
+#   git clone https://github.com/CaviraOSS/OpenMemory services/openmemory
+#   cp .env.example .env        # fill in OM_API_KEY and embedding credentials
+#   docker compose up -d
+#
+# The services/ directory is gitignored. Run scripts/check-services.sh to
+# verify everything is healthy after startup.
+#
+# Verify: scripts/check-services.sh
+
+services:
+  openmemory:
+    build:
+      context: ./services/openmemory/packages/openmemory-js
+      dockerfile: Dockerfile
+    ports:
+      - "${MEMORY_PORT:-2444}:${OM_PORT:-8080}"
+    volumes:
+      - openmemory-data:/data
+    environment:
+      # ── Required ────────────────────────────────────────────────────────────
+      # Authentication key — use any strong random string.
+      # Set the same value as x-api-key in .mcp.json.
+      OM_API_KEY: "${OM_API_KEY}"
+
+      # ── Embedding provider ───────────────────────────────────────────────────
+      # Options: openai | gemini | aws | ollama | local | synthetic
+      # "local" uses a bundled model with no API key. "synthetic" skips
+      # embeddings entirely (fast but no semantic search).
+      OM_EMBEDDINGS: "${OM_EMBEDDINGS:-openai}"
+      OM_EMBED_MODE: "${OM_EMBED_MODE:-simple}"
+      OM_EMBEDDING_FALLBACK: "${OM_EMBEDDING_FALLBACK:-synthetic}"
+
+      # API keys — only the one matching OM_EMBEDDINGS is needed
+      OPENAI_API_KEY: "${OPENAI_API_KEY:-}"
+      GEMINI_API_KEY: "${GEMINI_API_KEY:-}"
+      OLLAMA_URL: "${OLLAMA_URL:-http://host.docker.internal:11434}"
+
+      # ── Storage ──────────────────────────────────────────────────────────────
+      OM_DB_PATH: /data/openmemory.sqlite
+      OM_METADATA_BACKEND: "${OM_METADATA_BACKEND:-sqlite}"
+      OM_VECTOR_BACKEND: "${OM_VECTOR_BACKEND:-sqlite}"
+
+      # ── Performance tier ─────────────────────────────────────────────────────
+      # hybrid (recommended): balances speed and depth
+      # fast: quick retrieval, lower accuracy
+      # smart: better reasoning, slower
+      # deep: maximum depth, slowest
+      OM_TIER: "${OM_TIER:-hybrid}"
+
+      # ── Server ───────────────────────────────────────────────────────────────
+      OM_PORT: "${OM_PORT:-8080}"
+
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:${OM_PORT:-8080}/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+  # Optional dashboard UI — start with: docker compose --profile ui up -d
+  openmemory-dashboard:
+    profiles: [ui]
+    build:
+      context: ./services/openmemory/dashboard
+      dockerfile: Dockerfile
+    ports:
+      - "${DASHBOARD_PORT:-3001}:3000"
+    environment:
+      NEXT_PUBLIC_API_URL: "http://localhost:${MEMORY_PORT:-2444}"
+      NEXT_PUBLIC_API_KEY: "${OM_API_KEY}"
+    depends_on:
+      openmemory:
+        condition: service_healthy
+    restart: unless-stopped
+
+volumes:
+  openmemory-data:
+    driver: local
+    # To use a host path instead (easier backups), see docker-compose.override.yml.example

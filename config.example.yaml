@@ -1,0 +1,33 @@
+# Global default runtime: omp | claude | api
+# Individual agents can override this in their agent.yml.
+# omp is recommended — it is the only runtime with hooks, sessions, and MCP support.
+runtime: omp
+
+# (api runtime only) Model to use for direct API calls.
+# Omit to use the default: claude-opus-4-6-20251101
+# api_model: claude-haiku-4-5-20251001
+
+# (api runtime only) Max tokens for direct API calls. Default: 4096
+# api_max_tokens: 4096
+hooks:
+  # Global hooks that apply to every agent run (omp runtime only).
+  # These are TypeScript files in hooks/global/. Add a name here and run
+  # `bash hooks/install.sh` to activate it.
+  enabled:
+    - openmemory-user-id    # enforce user_id on all memory writes (recommended)
+    # - logging             # log all tool calls to logs/hooks.log
+
+notify:
+  plugins:
+    - type: telegram
+      token_env: TELEGRAM_BOT_TOKEN
+      chat_id_env: TELEGRAM_CHAT_ID
+    - type: discord
+      webhook_env: DISCORD_WEBHOOK_URL
+    - type: ntfy
+      topic_env: NTFY_TOPIC
+    - type: email
+      smtp_env: SMTP_URL
+      to_env: NOTIFY_EMAIL
+timezone: "America/Chicago"
+memory_url: "http://localhost:2444"

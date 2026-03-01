@@ -1,0 +1,31 @@
+# Merriman — crontab entries for example agents
+#
+# Add these to your crontab: crontab -e
+# Or use the install script:  bash scheduling/cron/install.sh
+#
+# All agents are run via the generic runner (scripts/run-agent.sh), which
+# reads agent.yml and prompt.md from the agent directory.
+#
+# IMPORTANT: Replace /path/to/merriman with your actual repo path.
+# The PATH line must include the directory containing the omp binary.
+# Common locations: ~/.bun/bin  (bun install)  |  /opt/homebrew/bin  (brew)
+#
+# Cron runs with a minimal environment. The PATH and MERRIMAN_DIR variables
+# below are required.
+
+# ── Environment ───────────────────────────────────────────────────────────────
+PATH=/home/__USER__/.bun/bin:/opt/homebrew/bin:/usr/local/bin:/usr/bin:/bin
+MERRIMAN_DIR=/path/to/merriman
+
+# ── morning-briefing — weekdays at 7:00 AM ────────────────────────────────────
+# Sends a daily briefing with weather, schedule, tasks, and headlines.
+0 7 * * 1-5  /bin/bash $MERRIMAN_DIR/scripts/run-agent.sh $MERRIMAN_DIR/agents/morning-briefing >> $MERRIMAN_DIR/logs/morning-briefing.log 2>&1
+
+# ── inbox-check — every day at 8:00 AM ────────────────────────────────────────
+# Checks email for anything requiring attention. Silent if nothing actionable.
+0 8 * * *    /bin/bash $MERRIMAN_DIR/scripts/run-agent.sh $MERRIMAN_DIR/agents/inbox-check >> $MERRIMAN_DIR/logs/inbox-check.log 2>&1
+
+# ── Template for your own agents ──────────────────────────────────────────────
+# Copy an existing line and change the schedule and agent directory path.
+# M  H  dom  mon  dow   command
+# 30 9  *    *    *     /bin/bash $MERRIMAN_DIR/scripts/run-agent.sh $MERRIMAN_DIR/agents/my-agent >> $MERRIMAN_DIR/logs/my-agent.log 2>&1

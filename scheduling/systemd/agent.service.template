@@ -1,0 +1,16 @@
+[Unit]
+Description=Merriman agent: __AGENT_NAME__
+After=network.target
+
+[Service]
+Type=oneshot
+# Runs from the repo root so scripts can find config.yml, .env, adapters/, etc.
+WorkingDirectory=__AGENT_DIR__
+ExecStart=/bin/bash __AGENT_DIR__/scripts/run-agent.sh __AGENT_DIR__/agents/__AGENT_NAME__
+# Forward stdout/stderr to the systemd journal (view with: journalctl -u merriman-__AGENT_NAME__)
+StandardOutput=journal
+StandardError=journal
+# Run as the installing user (set by install.sh)
+User=__USER__
+# Ensure the PATH includes common binary locations (omp, bun, brew)
+Environment="PATH=__PATH__"

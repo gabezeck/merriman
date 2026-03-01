@@ -1,0 +1,10 @@
+{
+  "name": "merriman-hooks",
+  "private": true,
+  "description": "TypeScript type support for Merriman omp hooks. Not a deployable package — types only.",
+  "devDependencies": {
+    "@oh-my-pi/pi-coding-agent": "latest",
+    "@types/node": "latest",
+    "typescript": "latest"
+  }
+}

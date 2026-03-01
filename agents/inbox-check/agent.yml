@@ -1,0 +1,10 @@
+name: Inbox Check
+description: Daily check of email inbox for important messages and summaries
+enabled: true
+schedule:
+  cron: "0 8 * * *" # every day at 8am
+  timezone: America/Chicago
+notify:
+  channels: [telegram] # references global notify config
+runtime: omp # optional: overrides global default
+silent_if: NOTHING_TO_REPORT # optional: suppress delivery on this sentinel

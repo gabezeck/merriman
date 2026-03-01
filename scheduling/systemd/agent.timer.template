@@ -1,0 +1,14 @@
+[Unit]
+Description=Merriman timer: __AGENT_NAME__
+Requires=merriman-__AGENT_NAME__.service
+
+[Timer]
+# Schedule converted from cron: __CRON__
+OnCalendar=__ONCALENDAR__
+# If the system was off when a job was due, run it when it next comes online.
+Persistent=true
+# Randomise start time by up to 30 seconds to avoid thundering herds.
+RandomizedDelaySec=30
+
+[Install]
+WantedBy=timers.target

@@ -1,0 +1,11 @@
+# Python dependencies for Merriman
+#
+# Only required if you use the Telegram notify plugin with rich markdown
+# formatting. If you skip this, Telegram messages are sent as plain text.
+#
+# Install into a virtual environment:
+#   python3 -m venv .venv
+#   source .venv/bin/activate   # or: .venv/bin/activate.fish
+#   pip install -r requirements.txt
+
+telegramify-markdown

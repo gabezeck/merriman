@@ -1,0 +1,67 @@
+# docker-compose.override.yml.example — Customisation points
+#
+# Docker Compose automatically merges docker-compose.override.yml on top of
+# docker-compose.yml. Copy this file to docker-compose.override.yml and
+# uncomment the sections you want to change.
+#
+# Documentation: https://docs.docker.com/compose/extends/
+
+services:
+  openmemory:
+
+    # ── Change the external port ──────────────────────────────────────────────
+    # Default is 2444. Change here AND update MEMORY_URL in .env and
+    # the url in .mcp.json to match.
+    #
+    # ports:
+    #   - "8080:8080"
+
+    # ── Use a host path for the data volume ───────────────────────────────────
+    # Useful for easy backups or mounting an external drive.
+    # The path must exist before starting the service.
+    #
+    # volumes:
+    #   - /your/backup/path:/data
+
+    # ── Override environment variables ───────────────────────────────────────
+    # Any variable from docker-compose.yml can be overridden here without
+    # editing the base file.
+    #
+    # environment:
+    #   OM_TIER: deep                 # switch to deep reasoning mode
+    #   OM_EMBEDDINGS: ollama         # use local Ollama embeddings
+    #   OLLAMA_URL: http://host.docker.internal:11434
+
+    # ── Disable restart policy (useful for development) ───────────────────────
+    #
+    # restart: "no"
+
+  # ── Run the dashboard UI by default (instead of via --profile ui) ───────────
+  #
+  # openmemory-dashboard:
+  #   profiles: []    # removes the 'ui' profile requirement
+
+# ── Use PostgreSQL instead of SQLite (for multi-user or high-volume setups) ───
+#
+# services:
+#   openmemory:
+#     environment:
+#       OM_METADATA_BACKEND: postgres
+#       OM_PG_HOST: postgres
+#       OM_PG_PORT: "5432"
+#       OM_PG_DB: openmemory
+#       OM_PG_USER: openmemory
+#       OM_PG_PASSWORD: "${POSTGRES_PASSWORD}"
+#
+#   postgres:
+#     image: postgres:16-alpine
+#     environment:
+#       POSTGRES_DB: openmemory
+#       POSTGRES_USER: openmemory
+#       POSTGRES_PASSWORD: "${POSTGRES_PASSWORD}"
+#     volumes:
+#       - postgres-data:/var/lib/postgresql/data
+#     restart: unless-stopped
+#
+# volumes:
+#   postgres-data:
