@@ -135,6 +135,7 @@ add agents by adding directories — no code changes required.
 | [Notifications](docs/notifications.md) | Configure channels, add a new channel |
 | [Memory](docs/memory.md) | OpenMemory setup, entity model, query patterns |
 | [Hooks](hooks/README.md) | Write and manage pre-tool-call hooks |
+| [vs. OpenClaw](docs/vs-openclaw.md) | Design comparison and positioning |
 
 ---
 
