@@ -1,6 +1,6 @@
-import type { HookAPI } from "@oh-my-pi/pi-coding-agent";
-import * as fs from "fs";
-import * as path from "path";
+import type { HookAPI } from "@oh-my-pi/pi-coding-agent/extensibility/hooks";
+import * as fs from "node:fs";
+import * as path from "node:path";
 
 /**
  * logging.ts — Log every tool call to logs/hooks.log.
@@ -28,7 +28,7 @@ function sanitise(input: Record<string, unknown>): Record<string, unknown> {
 	const out: Record<string, unknown> = {};
 	for (const [k, v] of Object.entries(input)) {
 		if (typeof v === "string" && v.length > MAX_VALUE_LENGTH) {
-			out[k] = v.slice(0, MAX_VALUE_LENGTH) + "…";
+			out[k] = `${v.slice(0, MAX_VALUE_LENGTH)}…`;
 		} else {
 			out[k] = v;
 		}
@@ -58,7 +58,7 @@ export default function (omp: HookAPI) {
 			});
 
 			try {
-				fs.appendFileSync(logFile, entry + "\n");
+				fs.appendFileSync(logFile, `${entry}\n`);
 			} catch {
 				// Non-fatal — do not block the tool call if logging fails
 			}

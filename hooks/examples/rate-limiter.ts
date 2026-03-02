@@ -1,4 +1,4 @@
-import type { HookAPI } from "@oh-my-pi/pi-coding-agent";
+import type { HookAPI } from "@oh-my-pi/pi-coding-agent/extensibility/hooks";
 
 /**
  * rate-limiter.ts — Example: limit how often a tool can be called per session.

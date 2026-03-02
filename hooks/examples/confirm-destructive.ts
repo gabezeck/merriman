@@ -1,4 +1,4 @@
-import type { HookAPI } from "@oh-my-pi/pi-coding-agent";
+import type { HookAPI } from "@oh-my-pi/pi-coding-agent/extensibility/hooks";
 
 /**
  * confirm-destructive.ts — Example: block irreversible tool calls and require
