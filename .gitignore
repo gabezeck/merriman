@@ -3,6 +3,7 @@ node_modules/
 # Env files
 .env*
 !.env.example
+config.yaml
 
 # MCP config (contains API keys — use .mcp.json.example as the template)
 .mcp.json
