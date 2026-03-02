@@ -4,7 +4,7 @@ A self-hosted personal AI agent platform. Delivers scheduled briefings,
 monitors your inbox, and maintains long-term memory — entirely on
 infrastructure you control.
 
-Named after the butler in *The Importance of Being Earnest*. Composed,
+Named after the butler in _The Importance of Being Earnest_. Composed,
 unhurried, and quietly indispensable.
 
 ---
@@ -29,13 +29,13 @@ except the LLM API you choose.
 
 ## Prerequisites
 
-| Tool | Purpose | Install |
-|------|---------|---------|
-| [omp][omp] | Agent runtime (required) | `bun install -g @openagentsinc/omp` |
-| [Docker][docker] | Runs OpenMemory | [docs.docker.com/get-docker][docker-install] |
-| Python 3 | Telegram markdown + scheduling helpers | system or `brew install python` |
-| [yq][yq] | YAML parsing in shell scripts | `brew install yq` |
-| [jq][jq] | JSON processing in notify scripts | `brew install jq` |
+| Tool             | Purpose                                | Install                                      |
+| ---------------- | -------------------------------------- | -------------------------------------------- |
+| [omp][omp]       | Agent runtime (required)               | `bun install -g @oh-my-pi/pi-coding-agent`   |
+| [Docker][docker] | Runs OpenMemory                        | [docs.docker.com/get-docker][docker-install] |
+| Python 3         | Telegram markdown + scheduling helpers | system or `brew install python`              |
+| [yq][yq]         | YAML parsing in shell scripts          | `brew install yq`                            |
+| [jq][jq]         | JSON processing in notify scripts      | `brew install jq`                            |
 
 omp requires [Bun][bun]: `curl -fsSL https://bun.sh/install | bash`
 
@@ -126,16 +126,16 @@ add agents by adding directories — no code changes required.
 
 ## Docs
 
-| Document | Contents |
-|----------|----------|
-| [Getting started](docs/getting-started.md) | Full setup walkthrough |
-| [Adding an agent](docs/adding-an-agent.md) | Create, schedule, and test a new agent |
-| [Adding MCP tools](docs/adding-mcp-tools.md) | Configure new tool integrations |
-| [Runtimes](docs/runtimes.md) | omp vs claude vs api — when to use each |
-| [Notifications](docs/notifications.md) | Configure channels, add a new channel |
-| [Memory](docs/memory.md) | OpenMemory setup, entity model, query patterns |
-| [Hooks](hooks/README.md) | Write and manage pre-tool-call hooks |
-| [vs. OpenClaw](docs/vs-openclaw.md) | Design comparison and positioning |
+| Document                                     | Contents                                       |
+| -------------------------------------------- | ---------------------------------------------- |
+| [Getting started](docs/getting-started.md)   | Full setup walkthrough                         |
+| [Adding an agent](docs/adding-an-agent.md)   | Create, schedule, and test a new agent         |
+| [Adding MCP tools](docs/adding-mcp-tools.md) | Configure new tool integrations                |
+| [Runtimes](docs/runtimes.md)                 | omp vs claude vs api — when to use each        |
+| [Notifications](docs/notifications.md)       | Configure channels, add a new channel          |
+| [Memory](docs/memory.md)                     | OpenMemory setup, entity model, query patterns |
+| [Hooks](hooks/README.md)                     | Write and manage pre-tool-call hooks           |
+| [vs. OpenClaw](docs/vs-openclaw.md)          | Design comparison and positioning              |
 
 ---
 
