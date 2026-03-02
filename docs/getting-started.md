@@ -15,9 +15,13 @@ omp (the agent runtime) is distributed via Bun:
 
 ```bash
 curl -fsSL https://bun.sh/install | bash
-bun install -g @openagentsinc/omp
+bun install -g @oh-my-pi/pi-coding-agent
 omp --version   # confirm it works
 ```
+
+If you have an existing subscription through an AI provider, you may be
+able to integrate via an OAuth login. Run `omp` and the invoke the
+`/login` command. [See here](https://github.com/can1357/oh-my-pi?tab=readme-ov-file#api-keys--oauth) for more details.
 
 ### Docker
 
@@ -62,7 +66,7 @@ cp .env.example .env
 
 Open `.env` and fill in at minimum:
 
-- `ANTHROPIC_API_KEY` — your Anthropic API key
+- `ANTHROPIC_API_KEY` — your Anthropic API key if using API-based models. Other providers are available.
 - At least one notification channel (e.g. `TELEGRAM_BOT_TOKEN` + `TELEGRAM_CHAT_ID`)
 - `OM_API_KEY` — any strong random string (used to authenticate against OpenMemory)
 
