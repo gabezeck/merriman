@@ -3,6 +3,7 @@
   "private": true,
   "description": "TypeScript type support for Merriman omp hooks. Not a deployable package — types only.",
   "devDependencies": {
+    "@biomejs/biome": "2.4.4",
     "@oh-my-pi/pi-coding-agent": "latest",
     "@types/node": "latest",
     "typescript": "latest"

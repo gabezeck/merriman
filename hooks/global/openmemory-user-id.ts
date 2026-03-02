@@ -1,4 +1,4 @@
-import type { HookAPI } from "@oh-my-pi/pi-coding-agent";
+import type { HookAPI } from "@oh-my-pi/pi-coding-agent/extensibility/hooks";
 
 /**
  * openmemory-user-id.ts — Enforce user_id scoping on all memory writes.

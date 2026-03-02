@@ -9,5 +9,6 @@
     "noEmit": true,
     "allowImportingTsExtensions": true
   },
-  "include": ["global/**/*.ts", "examples/**/*.ts"]
+  "include": ["global/**/*.ts", "examples/**/*.ts"],
+  "exclude": ["node_modules"],
 }
