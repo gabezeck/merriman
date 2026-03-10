@@ -22,7 +22,7 @@ AGENTS_DIR="${MERRIMAN_DIR}/agents"
 LAUNCH_AGENTS="${HOME}/Library/LaunchAgents"
 SCRIPT_DIR="$(dirname "$0")"
 PLIST_GEN="${SCRIPT_DIR}/plist_for_agent.py"
-TARGET_AGENT="${2:-}"  # set when --agent flag is used
+TARGET_AGENT=""
 
 # Parse --agent flag
 if [[ "${1:-}" == "--agent" ]]; then

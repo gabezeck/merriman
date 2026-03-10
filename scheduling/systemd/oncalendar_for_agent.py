@@ -12,11 +12,16 @@ Examples:
 
 Supported patterns:
     M H * * *         daily at H:M
+    M H D * *         specific day-of-month
+    M H * Mo *        specific month
+    M H D Mo *        specific month + day-of-month
     M H * * D         specific weekday (0=Sun, 1=Mon … 6=Sat, 7=Sun)
     M H * * D-E       weekday range
     M H * * D,E,...   weekday list
     */N * * * *       every N minutes
     * * * * *         every minute
+
+Note: combining day-of-month and day-of-week is not supported.
 """
 
 import sys
@@ -94,13 +99,20 @@ def cron_to_oncalendar(cron: str) -> str:
 
     time_str = f"{hour_val:02d}:{min_val:02d}:00"
 
+    if dom != "*" and dow != "*":
+        raise ValueError(
+            "Combining day-of-month and day-of-week in a single cron expression "
+            "is not supported for systemd scheduling."
+        )
+
     if dow == "*":
         day_prefix = ""
     else:
         days = _expand_days(dow)
         day_prefix = _days_to_oncalendar(days) + " "
 
-    return f"{day_prefix}*-*-* {time_str}"
+    date_part = f"*-{month}-{dom}"
+    return f"{day_prefix}{date_part} {time_str}"
 
 
 if __name__ == "__main__":

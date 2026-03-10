@@ -59,6 +59,7 @@ echo ""
 installed=0
 skipped=0
 failed=0
+services_written=()
 
 for agent_dir in "${AGENTS_DIR}"/*/; do
   [[ -d "$agent_dir" ]] || continue
@@ -114,16 +115,22 @@ for agent_dir in "${AGENTS_DIR}"/*/; do
     -e "s|__ONCALENDAR__|${oncalendar}|g" \
     "$TIMER_TMPL" > "$timer_file"
 
-  # Enable and start the timer
-  systemctl --user daemon-reload
-  systemctl --user enable --now "${service_name}.timer" 2>/dev/null && {
-    echo "  + ${service_name}.timer"
-    (( installed++ )) || true
-  } || {
-    echo "  [FAIL] Failed to enable ${service_name}.timer" >&2
-    (( failed++ )) || true
-  }
+  services_written+=("$service_name")
 done
+
+# Single daemon-reload after all unit files are written, then enable each timer
+if [[ ${#services_written[@]} -gt 0 ]]; then
+  systemctl --user daemon-reload
+  for service_name in "${services_written[@]}"; do
+    systemctl --user enable --now "${service_name}.timer" 2>/dev/null && {
+      echo "  + ${service_name}.timer"
+      (( installed++ )) || true
+    } || {
+      echo "  [FAIL] Failed to enable ${service_name}.timer" >&2
+      (( failed++ )) || true
+    }
+  done
+fi
 
 echo ""
 echo "${installed} installed  ${skipped} skipped  ${failed} failed"

@@ -43,6 +43,19 @@ def _read_cron(text: str) -> str:
 
 # ── Cron → launchd XML converter ─────────────────────────────────────────────
 
+def _expand_field(field: str) -> list[int]:
+    """Expand a cron integer field (commas/ranges) to a sorted list of integers."""
+    values = []
+    for part in field.split(","):
+        part = part.strip()
+        if "-" in part:
+            a, b = part.split("-", 1)
+            values.extend(range(int(a), int(b) + 1))
+        else:
+            values.append(int(part))
+    return sorted(set(values))
+
+
 def _expand_day_field(dow: str) -> list[int]:
     """Expand cron day-of-week field to a sorted list of integers.
 
@@ -81,11 +94,17 @@ def cron_to_launchd_xml(cron: str) -> str:
 
     Supported patterns:
         M H * * *         daily at H:M
+        M H D * *         specific day-of-month
+        M H D-E * *       day-of-month range
+        M H * Mo *        specific month
+        M H D Mo *        specific month + day-of-month
         M H * * D         specific weekday
         M H * * D-E       weekday range
         M H * * D,E,...   weekday list
         */N * * * *       every N minutes
         * * * * *         every minute
+
+    Note: combining day-of-month and day-of-week is not supported.
     """
     parts = cron.strip().split()
     if len(parts) != 5:
@@ -113,12 +132,27 @@ def cron_to_launchd_xml(cron: str) -> str:
 
     time_fields: dict = {"Hour": hour_val, "Minute": min_val}
 
-    if dow == "*":
-        dicts = [_dict_entry(time_fields)]
-    else:
-        day_list = _expand_day_field(dow)
-        dicts = [_dict_entry({"Weekday": d, **time_fields}) for d in day_list]
+    dom_vals = None if dom == "*" else _expand_field(dom)
+    month_vals = None if month == "*" else _expand_field(month)
 
+    if dom_vals is not None and dow != "*":
+        raise ValueError(
+            "Combining day-of-month and day-of-week in a single cron expression "
+            "is not supported for launchd scheduling."
+        )
+
+    if dow != "*":
+        day_list = _expand_day_field(dow)
+        base = [{"Weekday": d, **time_fields} for d in day_list]
+    elif dom_vals is not None:
+        base = [{"Day": d, **time_fields} for d in dom_vals]
+    else:
+        base = [time_fields]
+
+    if month_vals is not None:
+        base = [{"Month": m, **e} for m in month_vals for e in base]
+
+    dicts = [_dict_entry(e) for e in base]
     inner = "\n".join(dicts)
     return f"    <key>StartCalendarInterval</key>\n    <array>\n{inner}\n    </array>"
 
