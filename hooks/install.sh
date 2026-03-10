@@ -42,7 +42,10 @@ echo "  Target: $HOOKS_DEST"
 echo ""
 
 # ── Read enabled hooks from config.yml ───────────────────────────────────────
-mapfile -t enabled_hooks < <(yq '.hooks.enabled // [] | .[]' "$CONFIG_FILE" 2>/dev/null || true)
+enabled_hooks=()
+while IFS= read -r line; do
+  [[ -n "$line" ]] && enabled_hooks+=("$line")
+done < <(yq '.hooks.enabled // [] | .[]' "$CONFIG_FILE" 2>/dev/null || true)
 
 if [[ ${#enabled_hooks[@]} -eq 0 ]]; then
   echo "  No hooks listed under hooks.enabled in config.yml."

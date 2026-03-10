@@ -62,7 +62,7 @@ services:
       # fast: quick retrieval, lower accuracy
       # smart: better reasoning, slower
       # deep: maximum depth, slowest
-      OM_TIER: "${OM_TIER:-hybrid}"
+      OM_TIER: "${OM_TIER:-deep}"
 
       # ── Server ───────────────────────────────────────────────────────────────
       OM_PORT: "${OM_PORT:-8080}"
