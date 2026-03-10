@@ -1,9 +1,9 @@
-Inbox check for [YOUR_NAME]. Review the Gmail inbox for anything requiring action
-or attention.
+Inbox check for [YOUR_NAME]. Review the inbox via your email MCP for anything
+requiring action or attention.
 
 Look for:
 - Messages needing a reply (prioritise anything time-sensitive or from important contacts)
-- Anything that should become a task — if so, create it in Todoist with appropriate
+- Anything that should become a task — if so, create it via your task MCP with appropriate
   due date and priority
 - Anything worth remembering long-term — store it in memory with the appropriate user_id
 

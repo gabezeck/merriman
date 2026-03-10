@@ -1,8 +1,12 @@
 # Adding MCP tools
 
 MCP (Model Context Protocol) servers give the agent access to external
-services — calendar, email, tasks, weather, search, and more. Each server
-exposes a set of tools that the agent can call during a run.
+services — calendar, email, tasks, weather, news, and anything else the
+MCP ecosystem supports. Each server exposes a set of tools the agent can
+call during a run.
+
+The only required server is **openmemory**. Everything else is optional and
+entirely up to you — add whichever services fit your workflow.
 
 ---
 

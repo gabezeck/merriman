@@ -1,31 +1,8 @@
 {
+  "_comment": "Only openmemory is required. All other servers are examples — add, remove, or swap for whatever services you use. See docs/adding-mcp-tools.md for guidance.",
   "mcpServers": {
-    "todoist": {
-      "_comment": "Todoist task manager. Uses Todoist's official MCP endpoint.",
-      "_docs": "https://todoist.com/help/articles/use-mcp-with-todoist",
-      "command": "npx",
-      "args": ["-y", "mcp-remote", "https://ai.todoist.net/mcp"]
-    },
-
-    "google-calendar": {
-      "_comment": "Google Calendar. Requires OAuth credentials (see docs/getting-started.md).",
-      "_docs": "https://github.com/cocal/google-calendar-mcp",
-      "command": "npx",
-      "args": ["-y", "@cocal/google-calendar-mcp"],
-      "env": {
-        "GOOGLE_OAUTH_CREDENTIALS": "/path/to/gcp-oauth.keys.json"
-      }
-    },
-
-    "gmail": {
-      "_comment": "Gmail. Various MCP server implementations available — pick one.",
-      "_docs": "https://github.com/google-research/google-research/tree/master/gmail_mcp",
-      "command": "npx",
-      "args": ["-y", "@gongrzhe/server-gmail-autoauth-mcp"]
-    },
-
     "openmemory": {
-      "_comment": "OpenMemory — long-term semantic memory (CaviraOSS/OpenMemory, self-hosted).",
+      "_comment": "Required. OpenMemory — long-term semantic memory (CaviraOSS/OpenMemory, self-hosted).",
       "_setup": "Clone and start via docker-compose.yml. See docs/getting-started.md.",
       "_key": "x-api-key must match OM_API_KEY in your .env file.",
       "type": "http",
@@ -37,8 +14,32 @@
       }
     },
 
+    "todoist": {
+      "_comment": "Example: Todoist task manager. Replace with any task MCP you prefer.",
+      "_docs": "https://todoist.com/help/articles/use-mcp-with-todoist",
+      "command": "npx",
+      "args": ["-y", "mcp-remote", "https://ai.todoist.net/mcp"]
+    },
+
+    "google-calendar": {
+      "_comment": "Example: Google Calendar. Replace with any calendar MCP you prefer.",
+      "_docs": "https://github.com/cocal/google-calendar-mcp",
+      "command": "npx",
+      "args": ["-y", "@cocal/google-calendar-mcp"],
+      "env": {
+        "GOOGLE_OAUTH_CREDENTIALS": "/path/to/gcp-oauth.keys.json"
+      }
+    },
+
+    "gmail": {
+      "_comment": "Example: Gmail. Replace with any email MCP you prefer.",
+      "_docs": "https://github.com/google-research/google-research/tree/master/gmail_mcp",
+      "command": "npx",
+      "args": ["-y", "@gongrzhe/server-gmail-autoauth-mcp"]
+    },
+
     "guardian": {
-      "_comment": "The Guardian — news search and article retrieval. Free API key.",
+      "_comment": "Example: The Guardian news. Replace with any news MCP you prefer. Free API key.",
       "_docs": "https://open-platform.theguardian.com/access/",
       "command": "npx",
       "args": ["guardian-mcp-server"],
@@ -48,7 +49,7 @@
     },
 
     "open-meteo": {
-      "_comment": "Weather forecasts. No API key required.",
+      "_comment": "Example: Weather forecasts. No API key required.",
       "_docs": "https://open-meteo.com",
       "command": "npx",
       "args": ["-y", "-p", "open-meteo-mcp-server", "open-meteo-mcp-server"]

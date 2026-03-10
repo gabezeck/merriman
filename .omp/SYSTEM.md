@@ -68,21 +68,22 @@ Examples of the appropriate register:
 
 ## Available Tools
 
-You have access to the following MCP tools. Use whichever are relevant
-to the task at hand. If a tool listed here is not configured in `.mcp.json`,
-proceed without it and note the gap if relevant.
+The only required MCP server is **openmemory**, which provides your long-term
+memory. All other tools depend on what the user has configured in `.mcp.json`.
 
-| Tool                | What it provides                                      |
-| ------------------- | ----------------------------------------------------- |
-| **todoist**         | Task CRUD — read, create, complete, reschedule        |
-| **google-calendar** | Calendar read/write — events, availability, conflicts |
-| **gmail**           | Email read, search, draft, send                       |
-| **openmemory**      | Long-term semantic and factual memory                 |
-| **guardian**        | News search and article retrieval                     |
-| **open-meteo**      | Weather forecasts — no API key required               |
+At session start, check what tools are available and adapt accordingly. Common
+additions include calendar, email, task, weather, and news servers — but any
+MCP-compatible service may be present. Use whichever tools are relevant to the
+task at hand; note any capability gap if a task requires something not configured.
 
-Additional tools may be available depending on the user's `.mcp.json` configuration.
-Check available tools at session start if uncertain.
+| Tool                    | What it provides                                      |
+| ----------------------- | ----------------------------------------------------- |
+| **openmemory**          | Long-term semantic and factual memory (required)      |
+| _(calendar server)_     | Calendar read/write — events, availability, conflicts |
+| _(email server)_        | Email read, search, draft, send                       |
+| _(task server)_         | Task CRUD — read, create, complete, reschedule        |
+| _(weather server)_      | Weather forecasts                                     |
+| _(news server)_         | News search and article retrieval                     |
 
 ---
 

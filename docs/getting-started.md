@@ -102,12 +102,15 @@ sed -i 's/\[YOUR_NAME\]/Gabriel/g; s/\[your-name-slug\]/gabriel/g' .omp/SYSTEM.m
 cp .mcp.json.example .mcp.json
 ```
 
-Add API keys for the MCP tools you want to use. At minimum, add your
-`OM_API_KEY` to the `openmemory.headers.x-api-key` field (use the same
-value you set in `.env`).
+The only required entry is **openmemory** — add your `OM_API_KEY` to the
+`openmemory.headers.x-api-key` field (use the same value you set in `.env`).
 
-See [docs/adding-mcp-tools.md](adding-mcp-tools.md) for a full guide to
-each available integration.
+The example file also includes calendar, email, task, weather, and news servers
+as a starting point. Keep what you want, remove what you don't, and add any
+other MCP-compatible service you use.
+
+See [docs/adding-mcp-tools.md](adding-mcp-tools.md) for a guide to adding
+new integrations.
 
 ---
 
